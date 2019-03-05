@@ -1,0 +1,20 @@
+
+/**
+ * Write a description of class Invoice here.
+ *
+ * @author (your name)
+ * @version (a version number or a date)
+ */
+public class Invoice
+{
+  public void getId(int id){
+    }
+  public void getIdItem (String idItem){
+    }
+  public void getDate (String date){
+    }
+  public void getTotalPrice (int totalPrice){
+    }
+}
+    
+
