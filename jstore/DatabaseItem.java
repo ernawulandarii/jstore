@@ -9,7 +9,7 @@ public class DatabaseItem
 {
     // instance variables - replace the example below with your own
     private String[] listItem;
-    private Item item;
+    private static Item itemDB;
     
 
     /**
@@ -25,9 +25,9 @@ public class DatabaseItem
         return true;
     }
     
-    public Item getItem()
+    public static Item getItem()
     {
-        return item;
+        return itemDB;
     }
     
     public String[] getItemDatabase()
