@@ -5,15 +5,14 @@
  * @author (your name here)
  * @version (version number or date here)
  */
-public enum ItemStatus
+public enum InvoiceType
 {
-    New, Second, Refurbished, Sold;
-    //{
+    Buy, Sell;   
     
-//public String toString()
-//{
-  //  return "New, Second, Refurbished, Sold";
-//}
-//}
+    public String toString()
+    {
+        return "Buy, Sell";
+
+    }
 }
 

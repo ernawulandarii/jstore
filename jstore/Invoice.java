@@ -1,106 +1,157 @@
 
 /**
- * Write a description of class Location here.
+ * Kelas ini berfungsi untuk membuat invoice dari tiap transaksi.
  *
  * @author Erna Wulandari
- * @version 28-03-2019
+ * @version 28-Feb-2019
  */
-public class Invoice
+public abstract class Invoice
 {
-    // instance variables - replace the example below with your own
     private int id;
     private Item item;
     private String date;
-    private int totalPrice;
+    protected int totalPrice;
     private int totalItem;
     private InvoiceStatus status;
+    private InvoiceType type;
 
     /**
      * Constructor for objects of class Invoice
      */
-    public Invoice(int id, Item item, String date, 
-    int totalPrice, int totalItem, InvoiceStatus status)
+    public Invoice(int id, Item item, String date,int totalItem,
+    int totalPrice)
     {
         this.id = id;
         this.item = item;
         this.date = date;
+        this.totalItem = totalItem;
         this.totalPrice = totalPrice;
+        
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * Method untuk mengembalikan id invoice
      *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
+     * @return    id invoice
      */
     public int getId()
     {
         return id;
     }
     
+    /**
+     * Method untuk mengembalikan item yang dibeli
+     *
+     * @return    objek item
+     */
     public Item getItem()
     {
         return item;
     }
     
+    /**
+     * Method untuk mengembalikan tanggal invoice
+     *
+     * @return    tanggal invoice
+     */
     public String getDate()
     {
         return date;
     }
     
+    /**
+     * Method untuk mengembalikan total harga item yang dibeli
+     *
+     * @return    total harga
+     */
     public int getTotalPrice()
     {
         return totalPrice;
     }
     
+    /**
+     * 
+     *
+     * @return    
+     */
     public int getTotalItem()
     {
         return totalItem;
     }
     
-    public InvoiceStatus getInvoiceStatus()
-    {
-        return status;
-    }
+    /**
+     * 
+     *
+     * @return    
+     */
+    public abstract InvoiceStatus getInvoiceStatus();
+        
+    public abstract InvoiceType getInvoiceType();
     
+    /**
+     * Method untuk mengubah id invoice
+     *
+     * @param  id  id dari suatu invoice
+     */
     public void setId(int id)
     {
         this.id = id;
     }
     
+    /**
+     * Method untuk mengubah item pada invoice
+     *
+     * @param  item  objek item dari suatu invoice
+     */
     public void setItem(Item item)
     {
         this.item = item;
     }
     
+    /**
+     * Method untuk mengubah tanggal invoice
+     *
+     * @param  date  tanggal dari suatu invoice
+     */
     public void setDate(String date)
     {
         this.date = date;
     }
-        
+    
+    /**
+     * Method untuk mengubah total harga pada invoice
+     *
+     * @param  totalPrice  total harga dari suatu invoice
+     */
     public void setTotalPrice(int totalPrice)
     {
         this.totalPrice = totalPrice;
     }
     
+    /**
+     * 
+     *
+     * @param  
+     */
     public void setTotalItem(int totalItem)
     {
         this.totalItem = totalItem;
     }
     
+    /**
+     * 
+     *
+     * @param  
+     */
     public void setInvoiceStatus(InvoiceStatus status)
     {
         this.status = status;
     }
     
-    public void printData()
-    {
-        System.out.println("=====INVOICE dan ID======");
-        System.out.println("Tanggal "+date);
-        System.out.println("Item "+item);
-        System.out.println("Total Item "+totalItem);
-        System.out.println("Total Harga "+totalPrice);
-        System.out.println("Status "+status);
-        
-    }
+    /**
+     * Method untuk menampilkan total harga pada invoice
+     *
+     */
+    public abstract void printData();
+    
 }

@@ -7,9 +7,10 @@
  */
 public enum ItemCategory
 {
-    Electronics, Furniture, Stationery{
-        public String toString(){
-            return "Electronics, Furniture, Stationery";
-        }
-}
+    Electronics, Furniture, Stationery;
+    //{
+    //    public String toString(){
+      //      return "Electronics, Furniture, Stationery";
+      //  }
+//}
 }

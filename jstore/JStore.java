@@ -9,18 +9,14 @@ public class JStore
 {
     // instance variables - replace the example below with your own
     public static void main(String[] args){
-    Location city = new Location("Bogor", "Jawa Barat", "Kabupaten");
-    Supplier supplier = new Supplier(123, "Erna", "erna.wulandari@ui.ac.id", "0858-1234-5678", city);
-    city.printData();
-    supplier.printData();
-    Transaction transaksi = new Transaction();
-      transaksi.orderNewItem(supplier);
-      transaksi.orderSecondItem(supplier);
-      transaksi.orderRefurbishedItem(supplier);
-      transaksi.sellItemPaid(DatabaseItem.getItem());
-      transaksi.sellItemUnpaid(DatabaseItem.getItem());
-      transaksi.sellItemInstallment(DatabaseItem.getItem());
-    
+    Location location = new Location("Bogor", "Jawa Barat", "Kabupaten");
+        Supplier supplier = new Supplier(1, "Bamb", "erna.wulandari@ui.ac.id", "0857-8212-3456", location);
+        Item item = new Item(1, "Erna", 300, 100000, ItemCategory.Electronics, ItemStatus.New, supplier);
+        DatabaseItem.addItem(item);
+        Transaction.orderNewItem(item);
+        Transaction.sellItemPaid(item);
+        Transaction.sellItemUnpaid(item);
+        Transaction.sellItemInstallment(item);
     }
 
     /**
