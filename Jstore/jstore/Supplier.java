@@ -20,7 +20,7 @@ public class Supplier
     public Supplier(int id, String name, String email, 
     String phoneNumber, Location location)
     {
-        this.id = id;
+        id=DatabaseSupplier.getLastSupplierID()+1;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -79,11 +79,11 @@ public class Supplier
     
     public String toString()
     {
-        System.out.println("=====SUPPLIER=====");
-        System.out.println("Nama:  " + name);
-        System.out.println("Email: "+email);
-        System.out.println("Nomor Telepon: :"+phoneNumber);
-        System.out.println("Lokasi : "+ location.getCity());
-        return "";
+        return "SUPPLIER"+
+        "\nID: " + id+
+        "\nName: " + name+
+        "\nEmail: " + email+
+        "\nPhone Number: " + phoneNumber+
+        "\nLocation: " + location.getCity();
     }
 }

@@ -7,20 +7,23 @@
  */
 
 import java.text.*;
+import java.util.ArrayList;
 
 public class Sell_Paid extends Invoice
 {
-    private static InvoiceType INVOICE_TYPE = InvoiceType.Sell;
-    private static InvoiceStatus INVOICE_STATUS = InvoiceStatus.Paid;
+    static final private InvoiceType INVOICE_TYPE = InvoiceType.Sell;
+    static final private InvoiceStatus INVOICE_STATUS = InvoiceStatus.Paid;
     private Customer customer;
-    private SimpleDateFormat date = new SimpleDateFormat ("dd MMM yyy");
-
+    private boolean isActive = false;
+    
     /**
      * Constructor for objects of class Sell_Paid
      */
-    public Sell_Paid(int id, Item item, int totalItem, Customer customer)
+    public Sell_Paid(ArrayList<Integer> item, Customer customer)
     {
-        super(id, item, totalItem);
+        super(item);
+        this.customer=customer;
+        isActive=false;
     }
 
     /**
@@ -76,18 +79,23 @@ public class Sell_Paid extends Invoice
     @Override
     public String toString()
     {
-        System.out.println("ID = " + super.getId());
-        System.out.println("Item = " + super.getItem().getName());
-        System.out.println("Amount = " + super.getTotalItem());
-        System.out.println("Buy date = " + date.format(super.getDate().getTime()));
-        System.out.println("Price = " + super.getItem().getPrice());
-        System.out.println("Price total = " + super.getTotalPrice());
-        System.out.println("Supplier ID = " + super.getItem().getSupplier().getId());
-        System.out.println("Supplier name = " + super.getItem().getSupplier().getName());
-        System.out.println("Customer ID = " + customer.getId());
-        System.out.println("Customer name = " + customer.getName());
-        System.out.println("Status = " + this.getInvoiceStatus());
-        System.out.println("Sell success.");
-        return "";
+        String string="==========INVOICE=======";
+        string += "\nID ="+getId();
+        string += "\nBuy date =" + getDate();
+        for (Integer invoice : getItem())
+        {
+            Item item = DatabaseItem.getItemFromID(invoice.intValue());
+            string += "\nItem: " + item.getName();
+            string += "\nAmount: " + getItem().size();
+            string += "\nPrice: " + item.getPrice();
+            string += "\nSupplier ID: " + item.getSupplier().getId();
+            string += "\nSupplier Name: " + item.getSupplier().getName();
+        }
+        string += "\nPrice Total: " + getTotalPrice();
+        string += "\nCustomer ID: " + customer.getId();
+        string += "\nCustomer Name: " + customer.getName();
+        string += "\nStatus: " + INVOICE_STATUS;
+        string += "\nSell Success";
+        return string;
     }
 }

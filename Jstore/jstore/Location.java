@@ -68,10 +68,9 @@ public class Location
     
     public String toString()
     {
-        System.out.println("=====LOCATION======");
-        System.out.println("Provinsi " + province);
-        System.out.println("Kota : "+city);
-        System.out.println("Deskripsi : "+description);
-        return "";
+        return "========LOCATION========"+
+        "\nprovinsi:"+province+
+        "\nkota:"+city+
+        "\ndeskripsi:"+description;
     }
 }

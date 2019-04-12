@@ -7,20 +7,24 @@
  */
 
 import java.text.*;
+import java.util.ArrayList;
+
 
 public class Buy_Paid extends Invoice
 {
     // instance variables - replace the example below with your own
-    private static InvoiceType INVOICE_TYPE = InvoiceType.Buy;
-    private static InvoiceStatus INVOICE_STATUS = InvoiceStatus.Paid;
+    static final private InvoiceType INVOICE_TYPE = InvoiceType.Buy;
+    static final private InvoiceStatus INVOICE_STATUS = InvoiceStatus.Paid;
+    private boolean isActive;
     private SimpleDateFormat date = new SimpleDateFormat ("dd MMM yyy");
     
     /**
      * Constructor for objects of class Buy_Paid
      */
-    public Buy_Paid(int id, Item item, int totalItem)
+    public Buy_Paid(ArrayList<Integer> item)
     {
-        super(id, item, totalItem);
+        super(item);
+        isActive=false;
     }
 
     /**
@@ -47,6 +51,7 @@ public class Buy_Paid extends Invoice
         return INVOICE_TYPE;
     }
     
+    
     /**
      * Me
      *
@@ -54,16 +59,21 @@ public class Buy_Paid extends Invoice
     @Override
     public String toString()
     {
-        System.out.println("ID = " + super.getId());
-        System.out.println("Item = " + super.getItem().getName());
-        System.out.println("Amount = " + super.getTotalItem());
-        System.out.println("Buy date = " + date.format(super.getDate().getTime()));
-        System.out.println("Price = " + super.getItem().getPrice());
-        System.out.println("Price total = " + super.getTotalPrice());
-        System.out.println("Supplier ID = " + super.getItem().getSupplier().getId());
-        System.out.println("Supplier name = " + super.getItem().getSupplier().getName());
-        System.out.println("Status = " + this.getInvoiceStatus());
-        System.out.println("Buy success.");
-        return "";
+        String string="==========INVOICE=======";
+        string += "\nID ="+getId();
+        string += "\nBuy date =" + getDate();
+        for (Integer invoice : getItem())
+        {
+            Item item = DatabaseItem.getItemFromID(invoice.intValue());
+            string += "\nItem: " + item.getName();
+            string += "\nAmount: " + getItem().size();
+            string += "\nPrice: " + item.getPrice();
+            string += "\nSupplier ID: " + item.getSupplier().getId();
+            string += "\nSupplier Name: " + item.getSupplier().getName();
+        }
+        string += "\nPrice Total: " + getTotalPrice();
+        string += "\nStatus: " + INVOICE_STATUS;
+        string += "\nBuy Success";
+        return string;
     }
 }

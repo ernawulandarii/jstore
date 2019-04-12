@@ -19,9 +19,7 @@ public class Customer
     private String password;
     private int id;
     private Calendar birthDate;
-    private SimpleDateFormat date = new SimpleDateFormat ("dd MMM yyy");
-
-
+    
     /**
      * Constructor for objects of class Customer
      */
@@ -33,7 +31,7 @@ public class Customer
         this.email = email;
         this.username = username;
         this.password = password;
-        this.id = id;
+        id=DatabaseCustomer.getLastCustomerID()+1;
         this.birthDate = birthDate;
     }
     
@@ -44,7 +42,7 @@ public class Customer
         this.email = email;
         this.username = username;
         this.password = password;
-        this.id = id;
+        id=DatabaseCustomer.getLastCustomerID()+1;
         this.birthDate = new GregorianCalendar(year, (month-1), 
         dayOfMonth);
     }
@@ -85,7 +83,8 @@ public class Customer
     public Calendar getBirthDate()
     {
         
-        date.format(birthDate.getTime());
+        SimpleDateFormat date = new SimpleDateFormat("dd MMM yyyy");
+        System.out.println("Birth date: "+date.format(birthDate.getTime()));
         return birthDate;
     }
     
@@ -116,14 +115,15 @@ public class Customer
     
     public void setPassword(String password)
     {
-        if(Pattern.matches("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{6,}$",
-        password))
-        {
+        String pattern = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[a-zA-Z_0-9]{6,}$";
+        Pattern p = Pattern.compile(pattern);
+        Matcher m = p.matcher(password);
+        if(m.find()){
+            System.out.println("Password: " + m.group());
             this.password = password;
-        }
-        else
-        {
-            this.password = "";
+        }else{
+            System.out.println("Password: NULL");
+            this.password = "NULL";
         }
     }
     
@@ -145,12 +145,11 @@ public class Customer
     
     public String toString()
     {
-        System.out.println("Name: " + name);
-        System.out.println("Email: " + email);
-        System.out.println("Username: " + username);
-        System.out.println("Password: " + password);
-        System.out.println("ID: " + id);
-        System.out.println("Birthdate: " + birthDate);
-        return "";
+        return "===Customer==="+
+        "\nId: "+id+
+        "\nNama: "+name+
+        "\nUsername: "+username+
+        "\nEmail: "+email+
+        "\nPassword: "+password;
     }
 }

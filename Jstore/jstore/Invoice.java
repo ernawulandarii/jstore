@@ -7,25 +7,24 @@
  */
 
 import java.util.*;
+import java.util.ArrayList;
 
 public abstract class Invoice
 {
     private int id;
-    private Item item;
+    private ArrayList<Integer> item;
     private Calendar date;
     private int totalPrice;
-    private int totalItem;
+    private boolean isActive;
+    private Customer customer;
     
     /**
      * Constructor for objects of class Invoice
      */
-    public Invoice(int id, Item item,int totalItem)
+    public Invoice(ArrayList<Integer> item)
     {
-        this.id = id;
-        this.item = item;
-        this.totalItem = totalItem;
-        this.setTotalPrice(item.getPrice() * this.getTotalItem());
-        this.date = new GregorianCalendar();
+        this.item=item;
+        id=DatabaseInvoice.getLastInvoiceID()+1;
     }
 
     /**
@@ -43,7 +42,7 @@ public abstract class Invoice
      *
      * @return    objek item
      */
-    public Item getItem()
+    public ArrayList<Integer> getItem()
     {
         return item;
     }
@@ -73,9 +72,14 @@ public abstract class Invoice
      *
      * @return    
      */
-    public int getTotalItem()
+    public boolean getIsActive()
     {
-        return totalItem;
+        return isActive;
+    }
+    
+    public Customer getCustomer()
+    {
+        return customer;
     }
     
     /**
@@ -102,7 +106,7 @@ public abstract class Invoice
      *
      * @param  item  objek item dari suatu invoice
      */
-    public void setItem(Item item)
+    public void setItem(ArrayList<Integer> item)
     {
         this.item = item;
     }
@@ -124,7 +128,10 @@ public abstract class Invoice
      */
     public void setTotalPrice(int totalPrice)
     {
-        this.totalPrice = totalPrice;
+        for(Integer invoice : item)
+        {
+            totalPrice=totalPrice+DatabaseItem.getItemFromID(invoice).getPrice();
+        }
     }
     
     /**
@@ -132,26 +139,21 @@ public abstract class Invoice
      *
      * @param  
      */
-    public void setTotalItem(int totalItem)
+    //public abstract void setInvoiceStatus(InvoiceStatus status);
+    
+    public void setIsActive(boolean isActive)
     {
-        this.totalItem = totalItem;
+        this.isActive=isActive;
     }
-    
-    /**
-     *
-     *
-     * @param  
-     */
-    //public void setInvoiceStatus(InvoiceStatus status)
-    //{
-      //  this.status = status;
-    //}
-    
     
     /**
      * Method untuk menampilkan total harga pada invoice
      *
      */
-    public abstract String toString();
+    public String toString()
+    {
+        System.out.println("");
+        return "";
+    }
     
 }

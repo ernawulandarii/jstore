@@ -5,64 +5,67 @@
  * @author (your name)
  * @version (a version number or a date)
  */
+import java.util.ArrayList;
+
 public class DatabaseCustomer
 {
     // instance variables - replace the example below with your own
-    private Customer[] listCustomer;
-    private Customer customer;
+    private static ArrayList<Customer> CUSTOMER_DATABASE;
+    private static int LAST_CUSTOMER_ID;
 
     /**
      * Constructor for objects of class DatabaseCustomer
      */
-    public DatabaseCustomer()
+    public static ArrayList<Customer> getCustomerDatabase()
     {
-        // initialise instance variables
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public boolean addCustomer(Customer customer)
+        return CUSTOMER_DATABASE;
+        }
+        
+    public static int getLastCustomerID()
+        {
+            return LAST_CUSTOMER_ID;
+        }
+       
+    public static boolean addCustomer(Customer customer)
     {
-        // put your code here
-        return false;
-    }
-    
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public void removeCustomer(Customer customer)
-    {
-        // put your code here
+        boolean value=false;
+        for(Customer customerDB : CUSTOMER_DATABASE)
+        {
+            if(customer.getName()!=customerDB.getName()&&customer.getEmail()!=customerDB.getEmail())
+            {
+            CUSTOMER_DATABASE.add(customer);
+            LAST_CUSTOMER_ID=customer.getId();
+            value=true;
+            }
+        }
+        return value;
     }
     
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public Customer getCustomer()
+    public static Customer getCustomer(int id)
     {
-        // put your code here
-        return customer;
+        Customer value=null;
+        for(Customer customerDB : CUSTOMER_DATABASE)
+        {
+            if(customerDB.getId()==id)
+            {
+                value=customerDB;
+            }
+        }
+        return value;
     }
     
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param  y  a sample parameter for a method
-     * @return    the sum of x and y
-     */
-    public Customer[] getListCustomer()
+    public static boolean removeCustomer(int id)
     {
-        // put your code here
-        return listCustomer;
+         boolean value=false;
+        for(Customer customerDB : CUSTOMER_DATABASE)
+        {
+            if(customerDB.getId()==id)
+            {
+                CUSTOMER_DATABASE.remove(id);
+                value=true;
+            }
+        }
+        return value;
     }
+    
 }

@@ -6,25 +6,28 @@
  * @version (a version number or a date)
  */
 import java.text.*;
+import java.util.ArrayList;
 
 public class Sell_Installment extends Invoice
 {
     // instance variables - replace the example below with your own
-    private static InvoiceType INVOICE_TYPE = InvoiceType.Sell;
-    private static InvoiceStatus INVOICE_STATUS = InvoiceStatus.Installment;
+    static final private InvoiceType INVOICE_TYPE = InvoiceType.Sell;
+    static final private InvoiceStatus INVOICE_STATUS = InvoiceStatus.Installment;
     private int installmentPeriod;
     private int installmentPrice;
     private Customer customer;
-    private SimpleDateFormat date = new SimpleDateFormat ("dd MMM yyy");
+    private boolean isActive;
     
     /**
      * Constructor for objects of class Sell_Installment
      */
-    public Sell_Installment(int id, Item item, int totalItem, int installmentPeriod,
-    Customer customer)
+    public Sell_Installment(ArrayList<Integer> item,
+    int installmentPeriod, Customer customer)
     {
-        super(id, item, totalItem);
+        super(item);
         this.installmentPeriod = installmentPeriod;
+        this.customer=customer;
+        isActive=true;
     }
 
     /**
@@ -79,20 +82,25 @@ public class Sell_Installment extends Invoice
     @Override
     public String toString()
     {
-        System.out.println("ID = " + super.getId());
-        System.out.println("Item = " + super.getItem().getName());
-        System.out.println("Amount = " + super.getTotalItem());
-        System.out.println("Buy date = " + date.format(super.getDate().getTime()));
-        System.out.println("Price = " + super.getItem().getPrice());
-        System.out.println("Price total = " + super.getTotalPrice());
-        System.out.println("Installment price = " + installmentPrice);
-        System.out.println("Supplier ID = " + super.getItem().getSupplier().getId());
-        System.out.println("Supplier name = " + super.getItem().getSupplier().getName());
-        System.out.println("Customer ID = " + customer.getId());
-        System.out.println("Customer name = " + customer.getName());
-        System.out.println("Status = " + INVOICE_STATUS);
-        System.out.println("Installment period = " + installmentPeriod);
-        System.out.println("Sell success.");
-        return "";
+        String string="==========INVOICE=======";
+        string += "\nID ="+getId();
+        string += "\nBuy date =" + getDate();
+        for (Integer invoice : getItem())
+        {
+            Item item = DatabaseItem.getItemFromID(invoice.intValue());
+            string += "\nItem: " + item.getName();
+            string += "\nAmount: " + getItem().size();
+            string += "\nPrice: " + item.getPrice();
+            string += "\nSupplier ID: " + item.getSupplier().getId();
+            string += "\nSupplier Name: " + item.getSupplier().getName();
+        }
+        string += "\nPrice Total: " + getTotalPrice();
+        string += "\nInstallment Price: " + installmentPrice;
+        string += "\nCustomer ID: " + customer.getId();
+        string += "\nCustomer Name: " + customer.getName();
+        string += "\nStatus: " + INVOICE_STATUS;
+        string += "\nInstallment period: " + installmentPeriod;
+        string += "\nSell Success";
+        return string;
     }
 }
