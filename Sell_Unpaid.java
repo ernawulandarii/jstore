@@ -5,7 +5,8 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-
+package jstore;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.ArrayList;
 import java.util.*;
@@ -35,7 +36,7 @@ public class Sell_Unpaid extends Invoice
     /**
      * An 
      *
-     * @param  y  a sa
+     * @param
      * @return    the 
      */
     @Override
@@ -47,7 +48,7 @@ public class Sell_Unpaid extends Invoice
     /**
      * An 
      *
-     * @param  y  a 
+     * @param
      * @return    th
      */
     @Override
@@ -59,7 +60,7 @@ public class Sell_Unpaid extends Invoice
     /**
      * An 
      *
-     * @param  y  a 
+     * @param
      * @return    th
      */
     public Customer getCustomer()
@@ -70,7 +71,7 @@ public class Sell_Unpaid extends Invoice
     /**
      * An 
      *
-     * @param  y  a 
+     * @param
      * @return    th
      */
     public Calendar getDueDate()
@@ -81,7 +82,7 @@ public class Sell_Unpaid extends Invoice
     /**
      * An 
      *
-     * @param  y  a 
+     * @param
      * @return    th
      */
     public void setCustomer(Customer customer)
@@ -92,7 +93,7 @@ public class Sell_Unpaid extends Invoice
     /**
      * An 
      *
-     * @param  y  a 
+     * @param
      * @return    th
      */
     public void setDueDate(Calendar dueDate)
@@ -110,15 +111,16 @@ public class Sell_Unpaid extends Invoice
         System.out.println("ID = " + super.getId());
         ArrayList<Integer> listItemID = DatabaseInvoice.getInvoice(super.getId()).getItem();
         for(int itemID : listItemID)
-        {
-            System.out.println("Item = " + 
-            DatabaseItem.getItemFromID(itemID).getName());
-            System.out.println("Price = " + 
-            DatabaseItem.getItemFromID(itemID).getPrice());
-            System.out.println("Supplier ID = " + 
-            DatabaseItem.getItemFromID(itemID).getSupplier().getId());
-            System.out.println("Supplier name = " + 
-            DatabaseItem.getItemFromID(itemID).getSupplier().getName());
+        { if (DatabaseItem.getItemFromID(itemID) != null){
+                System.out.println("Item = " +
+                        DatabaseItem.getItemFromID(itemID).getName());
+                System.out.println("Price = " +
+                        DatabaseItem.getItemFromID(itemID).getPrice());
+                System.out.println("Supplier ID = " +
+                        DatabaseItem.getItemFromID(itemID).getSupplier().getId());
+                System.out.println("Supplier name = " +
+                        DatabaseItem.getItemFromID(itemID).getSupplier().getName());
+          }
         }
         System.out.println("Buy date = " + date.format(super.getDate().getTime()));
         System.out.println("Price total = " + super.getTotalPrice());

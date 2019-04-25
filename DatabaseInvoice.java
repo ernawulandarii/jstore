@@ -5,13 +5,15 @@
  * @author (your name)
  * @version (a version number or a date)
  */
+package jstore;
 import java.util.ArrayList;
 import java.util.List;
 
 public class DatabaseInvoice
 {
     // instance variables - replace the example below with your own
-    private static ArrayList<Invoice> INVOICE_DATABASE;
+
+    private static ArrayList<Invoice> INVOICE_DATABASE = new ArrayList<Invoice>();
     private static int LAST_INVOICE_ID = 0;
 
     /**
@@ -26,19 +28,20 @@ public class DatabaseInvoice
     {
         return LAST_INVOICE_ID;
     }
-    
+
     public static boolean addInvoice(Invoice invoice) throws InvoiceAlreadyExistsException
     {
+
         for(Invoice temp : INVOICE_DATABASE)
         {
-            if((temp.getItem() == invoice.getItem()) ||
+            if((temp.getItem() == invoice.getItem()) &&
                     (temp.getCustomer() == invoice.getCustomer()))
             {
                 throw new InvoiceAlreadyExistsException(invoice);
             }
         }
         INVOICE_DATABASE.add(invoice);
-        LAST_INVOICE_ID = invoice.getId();
+        LAST_INVOICE_ID++;
         return true;
     }
     
@@ -46,7 +49,7 @@ public class DatabaseInvoice
     {
         for(Invoice invoice : INVOICE_DATABASE)
         {
-            if(invoice.getId()==id)
+            if(invoice.getId() == id)
             {
                 return invoice;
             }

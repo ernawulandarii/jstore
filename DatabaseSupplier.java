@@ -5,6 +5,7 @@
  * @author Erna Wulandari
  * @version 28-03-2019
  */
+package jstore;
 import java.util.ArrayList;
 import java.util.*;
 
@@ -54,6 +55,7 @@ public class DatabaseSupplier
             {
                 return temp;
             }
+
         }
         return null;
     }
@@ -66,7 +68,7 @@ public class DatabaseSupplier
                 ArrayList<Item> list = DatabaseItem.getItemFromSupplier(temp);
                 for(Item temp1 : list)
                 {
-                    DatabaseItem.removeItem(temp.getId());
+                    DatabaseItem.removeItem(temp1.getId());
                 }
                 SUPPLIER_DATABASE.remove(temp);
                 return true;

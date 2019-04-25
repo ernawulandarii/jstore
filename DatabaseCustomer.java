@@ -5,6 +5,7 @@
  * @author (your name)
  * @version (a version number or a date)
  */
+package jstore;
 import java.util.ArrayList;
 
 public class DatabaseCustomer
@@ -16,21 +17,21 @@ public class DatabaseCustomer
     /**
      * Constructor for objects of class DatabaseCustomer
      */
-   public DatabaseCustomer()
-   {
+    public DatabaseCustomer()
+    {
 
-   }
-    
+    }
+
     public static ArrayList<Customer> getCustomerDatabase()
     {
         return CUSTOMER_DATABASE;
     }
-        
+
     public static int getLastCustomerID()
 
-        {
-            return LAST_CUSTOMER_ID++;
-        }
+    {
+        return LAST_CUSTOMER_ID++;
+    }
 
     public static boolean addCustomer(Customer customer)throws CustomerAlreadyExistsException
     {
@@ -47,7 +48,7 @@ public class DatabaseCustomer
         LAST_CUSTOMER_ID = customer.getId();
         return true;
     }
-    
+
     public static Customer getCustomer(int id)
     {
         for(Customer customerDB : CUSTOMER_DATABASE)
@@ -72,5 +73,5 @@ public class DatabaseCustomer
         }
         throw new CustomerNotFoundException(id);
     }
-    
+
 }

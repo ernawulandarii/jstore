@@ -1,3 +1,4 @@
+package jstore;
 public class RunForYourLife implements Runnable
 {
     private Thread thread;

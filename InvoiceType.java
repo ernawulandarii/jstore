@@ -5,6 +5,7 @@
  * @author (your name here)
  * @version (version number or date here)
  */
+package jstore;
 public enum InvoiceType
 {
     Buy("Buy"), Sell("Sell");

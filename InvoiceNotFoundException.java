@@ -1,3 +1,4 @@
+package jstore;
 public class InvoiceNotFoundException extends Exception
 {
     private int invoice_error;
@@ -10,6 +11,7 @@ public class InvoiceNotFoundException extends Exception
 
     public String getExMessage()
     {
-        return super.getMessage() + invoice_error + "not found.";
+        System.out.println("\n====Invoice Not Found Exception====");
+        return super.getMessage() + invoice_error + " not found.";
     }
 }

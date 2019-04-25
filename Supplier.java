@@ -5,11 +5,12 @@
  * @author Erna Wulandari
  * @version 28-03-2019
  */
+package jstore;
 public class Supplier
 {
     // instance variables - replace the example below with your own
     private int id;
-    private String name;
+    private static String name;
     private String email;
     private String phoneNumber;
     private Location location;
@@ -20,7 +21,7 @@ public class Supplier
     public Supplier(int id, String name, String email, 
     String phoneNumber, Location location)
     {
-        id=DatabaseSupplier.getLastSupplierID()+1;
+        this.id=DatabaseSupplier.getLastSupplierID()+1;
         this.name = name;
         this.email = email;
         this.phoneNumber = phoneNumber;
@@ -32,7 +33,7 @@ public class Supplier
         return id;
     }
     
-    public String getName()
+    public static String getName()
     {
         return name;
     }

@@ -5,9 +5,10 @@
  * @author (your name)
  * @version (a version number or a date)
  */
-
+package jstore;
 import java.text.*;
 import java.util.ArrayList;
+
 
 
 public class Buy_Paid extends Invoice

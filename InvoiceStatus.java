@@ -5,6 +5,7 @@
  * @author (your name here)
  * @version (version number or date here)
  */
+package jstore;
 public enum InvoiceStatus
 {
     Paid("Paid"), Unpaid("Unpaid"), Installment("Installment");

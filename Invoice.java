@@ -5,14 +5,14 @@
  * @author Erna Wulandari
  * @version 28-Feb-2019
  */
-
+package jstore;
 import java.util.*;
 import java.util.ArrayList;
 
 public abstract class Invoice
 {
-    private int id;
-    private ArrayList<Integer> item;
+    private static int id;
+    private ArrayList<Integer> item = new ArrayList<Integer>();
     private Calendar date;
     private int totalPrice;
     private boolean isActive;
@@ -24,7 +24,7 @@ public abstract class Invoice
      */
     public Invoice(ArrayList<Integer> item)
     {
-        this.item=item;
+        this.item = item;
         id=DatabaseInvoice.getLastInvoiceID()+1;
         this.date = new GregorianCalendar();
     }
@@ -34,7 +34,7 @@ public abstract class Invoice
      *
      * @return    id invoice
      */
-    public int getId()
+    public static int getId()
     {
         return id;
     }

@@ -1,3 +1,4 @@
+package jstore;
 public class SupplierNotFoundException extends Exception {
     private int supplier_error;
 
@@ -10,6 +11,7 @@ public class SupplierNotFoundException extends Exception {
 
     public String getExMessage()
     {
+        System.out.println("\n====Supplier Not Found Exception====");
         return super.getMessage() + supplier_error + " not found.";
 
     }

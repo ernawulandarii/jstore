@@ -5,6 +5,7 @@
  * @author Erna Wulandari
  * @version (a version number or a date)
  */
+package jstore;
 import java.text.*;
 import java.util.ArrayList;
 
@@ -85,15 +86,16 @@ public class Sell_Installment extends Invoice
         System.out.println("ID = " + super.getId());
         ArrayList<Integer> listItemID = DatabaseInvoice.getInvoice(super.getId()).getItem();
         for(int itemID : listItemID)
-        {
-            System.out.println("Item = " + 
-            DatabaseItem.getItemFromID(itemID).getName());
-            System.out.println("Price = " + 
-            DatabaseItem.getItemFromID(itemID).getPrice());
-            System.out.println("Supplier ID = " + 
-            DatabaseItem.getItemFromID(itemID).getSupplier().getId());
-            System.out.println("Supplier name = " + 
-            DatabaseItem.getItemFromID(itemID).getSupplier().getName());
+        {if (DatabaseItem.getItemFromID(itemID) != null) {
+            System.out.println("Item = " +
+                    DatabaseItem.getItemFromID(itemID).getName());
+            System.out.println("Price = " +
+                    DatabaseItem.getItemFromID(itemID).getPrice());
+            System.out.println("Supplier ID = " +
+                    DatabaseItem.getItemFromID(itemID).getSupplier().getId());
+            System.out.println("Supplier name = " +
+                    DatabaseItem.getItemFromID(itemID).getSupplier().getName());
+        }
         }
         System.out.println("Buy date = " + date.format(super.getDate().getTime()));
         System.out.println("Price total = " + super.getTotalPrice());
