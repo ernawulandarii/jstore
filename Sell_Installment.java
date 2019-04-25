@@ -23,7 +23,7 @@ public class Sell_Installment extends Invoice
     /**
      * Constructor for objects of class Sell_Installment
      */
-    public Sell_Installment(ArrayList<Integer> item, Customer customer)
+    public Sell_Installment(ArrayList<Integer> item, int installmentPeriod, Customer customer)
     {
         super(item);
         this.installmentPeriod = installmentPeriod;

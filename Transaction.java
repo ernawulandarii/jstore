@@ -85,7 +85,7 @@ public class Transaction {
      */
     public static void sellItemInstallment(ArrayList<Integer> item, Customer customer,
                                            int installmentPeriod) throws InvoiceAlreadyExistsException {
-        Invoice sellInstall = new Sell_Installment(listItem, customer);
+        Invoice sellInstall = new Sell_Installment(listItem, installmentPeriod, customer);
         DatabaseInvoice.addInvoice(sellInstall);
     }
 
