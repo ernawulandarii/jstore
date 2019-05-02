@@ -41,7 +41,7 @@ public class DatabaseInvoice
             }
         }
         INVOICE_DATABASE.add(invoice);
-        LAST_INVOICE_ID++;
+        LAST_INVOICE_ID = invoice.getId();
         return true;
     }
     
@@ -68,10 +68,7 @@ public class DatabaseInvoice
             {
                 list.add(temp);
                 found = true;
-            }
-            else
-            {
-                throw new CustomerDoesntHaveActiveException(customer);
+
             }
         }
         if(found)
@@ -80,7 +77,7 @@ public class DatabaseInvoice
         }
         else
         {
-            return null;
+            throw new CustomerDoesntHaveActiveException(customer);
         }
     }
 
