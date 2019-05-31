@@ -1,43 +1,39 @@
-
+package jstore;
 /**
  * Write a description of class DatabaseInvoice here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-package jstore;
 import java.util.ArrayList;
-import java.util.List;
 
 public class DatabaseInvoice
 {
     // instance variables - replace the example below with your own
-
-    private static ArrayList<Invoice> INVOICE_DATABASE = new ArrayList<Invoice>();
-    private static int LAST_INVOICE_ID = 0;
+    private static final ArrayList<Invoice> INVOICE_DATABASE=new ArrayList<>();
+    private static int LAST_INVOICE_ID=0;
 
     /**
-     * Constructor for objects of class DatabaseInvoice
+     * An example of a method - replace this comment with your own
+     *
+     * @return    the sum of x and y
      */
     public static ArrayList<Invoice> getInvoiceDatabase()
     {
         return INVOICE_DATABASE;
     }
     
-    public static int getLastInvoiceID()
+    public static int getLastInvoiceId()
     {
         return LAST_INVOICE_ID;
     }
-
+    
     public static boolean addInvoice(Invoice invoice) throws InvoiceAlreadyExistsException
     {
-
-        for(Invoice temp : INVOICE_DATABASE)
-        {
-            if((temp.getItem() == invoice.getItem()) &&
-                    (temp.getCustomer() == invoice.getCustomer()))
-            {
-                throw new InvoiceAlreadyExistsException(invoice);
+        // put your code here
+        for (Invoice invoice1: INVOICE_DATABASE) {
+            if ((invoice.getItem().equals(invoice1.getItem()))) {
+                throw new InvoiceAlreadyExistsException(invoice1);
             }
         }
         INVOICE_DATABASE.add(invoice);
@@ -45,58 +41,44 @@ public class DatabaseInvoice
         return true;
     }
     
-    public static Invoice getInvoice (int id)
+    public static Invoice getInvoice(int id)
     {
-        for(Invoice invoice : INVOICE_DATABASE)
-        {
-            if(invoice.getId() == id)
-            {
+        for (Invoice invoice : INVOICE_DATABASE) {
+            if (id == invoice.getId()) {
                 return invoice;
             }
         }
         return null;
     }
-                       
+    
     public static ArrayList<Invoice> getActiveOrder(Customer customer) throws CustomerDoesntHaveActiveException
     {
-        ArrayList<Invoice> list = new ArrayList<Invoice>();
-        boolean found = false;
-        for(Invoice temp : INVOICE_DATABASE)
-        {
-            if(temp.getCustomer() == customer &&
-                    temp.getIsActive() == true)
-            {
-                list.add(temp);
-                found = true;
-
+        ArrayList<Invoice> temp = new ArrayList<>();
+        for (Invoice invoice : INVOICE_DATABASE) {
+            if (customer.getId()==invoice.getCustomer().getId() && invoice.getIsActive() && (invoice.getInvoiceStatus().equals(InvoiceStatus.Unpaid)||invoice.getInvoiceStatus().equals(InvoiceStatus.Installment)) ) {
+                temp.add(invoice);
             }
         }
-        if(found)
-        {
-            return list;
+        if(temp.size()>0){
+            return temp;
         }
-        else
-        {
+        else{
             throw new CustomerDoesntHaveActiveException(customer);
         }
     }
-
-    public static boolean removeInvoice(int id)throws InvoiceNotFoundException
+    
+    public static boolean removeInvoice(int id) throws InvoiceNotFoundException
     {
-        for(Invoice temp : INVOICE_DATABASE)
-        {
-            if(temp.getId() == id)
-            {
-                if(temp.getIsActive() == true)
-                {
-                    temp.setIsActive(false);
+        for(Invoice invoice : INVOICE_DATABASE) {
+            if (id == invoice.getId()) {
+                if (invoice.getIsActive()) {
+                    invoice.setIsActive(false);
+                    invoice.toString();
                 }
-                INVOICE_DATABASE.remove(temp);
+                INVOICE_DATABASE.remove(invoice);
                 return true;
             }
         }
         throw new InvoiceNotFoundException(id);
     }
-      
-    
 }

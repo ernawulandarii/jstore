@@ -1,76 +1,80 @@
-
-/**
- * Write a description of class Location here.
- *
- * @author Erna Wulandari
- * @version 28-03-2019
- */
 package jstore;
+
 import java.util.ArrayList;
-import java.util.*;
 
 public class DatabaseSupplier
 {
     // instance variables - replace the example below with your own
-    private static ArrayList<Supplier> SUPPLIER_DATABASE = new ArrayList<Supplier>();
-    private static int LAST_SUPPLIER_ID = 0;
+    private final static ArrayList<Supplier> SUPPLIER_DATABASE=new ArrayList<>();
+    private static int LAST_SUPPLIER_ID=0;
 
     /**
-     * Constructor for objects of class DatabaseSupplier
+     * Method untuk menambah data supplier
+     * 
+     * @return    true
      */
-    public DatabaseSupplier()
-    {
-
-    }
-
     public static ArrayList<Supplier> getSupplierDatabase()
     {
         return SUPPLIER_DATABASE;
     }
+    
     public static int getLastSupplierID()
     {
         return LAST_SUPPLIER_ID;
     }
-
+    
     public static boolean addSupplier(Supplier supplier) throws SupplierAlreadyExistsException
     {
-        for(Supplier temp : SUPPLIER_DATABASE)
-        {
-            if(((temp.getEmail() == supplier.getEmail()) &&
-                    (temp.getPhoneNumber() == supplier.getPhoneNumber())))
-            {
-                throw new SupplierAlreadyExistsException(supplier);
+        // put your code here
+        String email = supplier.getEmail();
+        String name = supplier.getName();
+        String phoneNumber = supplier.getPhoneNumber();
+        for( Supplier sup : SUPPLIER_DATABASE){
+            if(name.equals(sup.getName())){
+                throw new SupplierAlreadyExistsException(sup);
+            }
+            if(email.equals(sup.getEmail())){
+                throw new SupplierAlreadyExistsException(sup);
+            }
+            if(phoneNumber.equals(sup.getPhoneNumber())){
+                throw new SupplierAlreadyExistsException(sup);
             }
         }
         SUPPLIER_DATABASE.add(supplier);
-        LAST_SUPPLIER_ID++;
-        return true;
+        LAST_SUPPLIER_ID = supplier.getId();
+        return false;
     }
-
+    
     public static Supplier getSupplier(int id)
     {
-        for(Supplier temp : SUPPLIER_DATABASE)
-        {
-            if(temp.getId() == id)
-            {
-                return temp;
+        for ( Supplier sup : SUPPLIER_DATABASE ){
+            if (sup.getId() == id) {
+                return sup;
             }
-
         }
         return null;
     }
-    public static boolean removeSupplier(int id)throws SupplierNotFoundException, ItemNotFoundException
+    
+    /**
+     * Method untuk menghapus data supplier
+     *
+     * @return    true
+     */
+    public static boolean removeSupplier(int id) throws SupplierNotFoundException
     {
-        for(Supplier temp : SUPPLIER_DATABASE)
-        {
-            if(temp.getId() == id)
-            {
-                ArrayList<Item> list = DatabaseItem.getItemFromSupplier(temp);
-                for(Item temp1 : list)
-                {
-                    DatabaseItem.removeItem(temp1.getId());
+        for ( Supplier sup : SUPPLIER_DATABASE ){
+            if (sup.getId() == id) {
+                ArrayList<Item> temp = DatabaseItem.getItemFromSupplier(sup);
+                if (temp != null) {
+                    for (Item item : temp){
+                        try {
+                            DatabaseItem.removeItem(item.getId());
+                        } catch (ItemNotFoundException e) {
+                            System.out.print(e.getExMessage());
+                        }
+                    }
                 }
-                SUPPLIER_DATABASE.remove(temp);
+                SUPPLIER_DATABASE.remove(sup);
                 return true;
             }
         }

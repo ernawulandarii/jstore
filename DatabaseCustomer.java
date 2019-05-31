@@ -1,89 +1,99 @@
-
+package jstore;
 /**
  * Write a description of class DatabaseCustomer here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-package jstore;
 import java.util.ArrayList;
 
 public class DatabaseCustomer
 {
     // instance variables - replace the example below with your own
-    private static ArrayList<Customer> CUSTOMER_DATABASE = new ArrayList<Customer>();
-    private static int LAST_CUSTOMER_ID = 0;
+    private final static ArrayList<Customer> CUSTOMER_DATABASE=new ArrayList<>();
+    private static int LAST_CUSTOMER_ID=0;
 
     /**
-     * Constructor for objects of class DatabaseCustomer
+     * An example of a method - replace this comment with your own
+     *
      */
-    public DatabaseCustomer()
-    {
-
-    }
-
     public static ArrayList<Customer> getCustomerDatabase()
     {
         return CUSTOMER_DATABASE;
     }
-
+    
     public static int getLastCustomerID()
-
     {
-        return LAST_CUSTOMER_ID++;
+        return LAST_CUSTOMER_ID;
     }
-
-    public static boolean addCustomer(Customer customer)throws CustomerAlreadyExistsException
+    
+    public static boolean addCustomer(Customer customer) throws CustomerAlreadyExistsException
     {
-        boolean found = false;
-        for(Customer temp : CUSTOMER_DATABASE)
+        // put your code here
+        boolean success = true;
+        for(Customer object : CUSTOMER_DATABASE)
         {
-            if(temp.getName() == customer.getName() || temp.getEmail()
-                    == customer.getEmail())
+            if(object.getUsername().equals(customer.getUsername()) || object.getEmail().equals(customer.getEmail()))
             {
-                throw new CustomerAlreadyExistsException(customer);
+                throw new CustomerAlreadyExistsException(object);
+            }
+            else
+            {
+                success = true;
             }
         }
-        CUSTOMER_DATABASE.add(customer);
-        LAST_CUSTOMER_ID = customer.getId();
-        return true;
+        if (success)
+        {
+            CUSTOMER_DATABASE.add(customer);
+            LAST_CUSTOMER_ID = customer.getId();
+        }
+        return success;
     }
-
+    
     public static Customer getCustomer(int id)
     {
-        for(Customer customerDB : CUSTOMER_DATABASE)
+        Customer value = null;
+        for(Customer object : CUSTOMER_DATABASE)
         {
-            if(customerDB.getId()==id)
+            if(object.getId() == id)
             {
-                return customerDB;
+                value = object;
+                break;
             }
         }
-        return null;
+        return value;
     }
-
-    public static boolean removeCustomer(int id)throws CustomerNotFoundException
+    
+    public static boolean removeCustomer(int id) throws CustomerNotFoundException
     {
-        for(Customer temp : CUSTOMER_DATABASE)
+        Customer value = null;
+        int index;
+        boolean success = false;
+        for(Customer object : CUSTOMER_DATABASE)
         {
-            if(temp.getId() == id)
+            if(object.getId() == id)
             {
-                CUSTOMER_DATABASE.remove(temp);
-                return true;
+                value = object;
+                index = CUSTOMER_DATABASE.indexOf(value);
+                CUSTOMER_DATABASE.remove(index);
+                success = true;
+                break;
             }
         }
         throw new CustomerNotFoundException(id);
     }
 
-    public static Customer getCustomerLogin(String email, String password){
-        int i;
-        for(i=0;i<CUSTOMER_DATABASE.size();i++){
-            if(CUSTOMER_DATABASE.get(i).getEmail().equals(email) && CUSTOMER_DATABASE.get(i).getPassword().equals(password)){
-                return CUSTOMER_DATABASE.get(i);
-
+    public static Customer getCustomerLogin(String email, String password)
+    {
+        Customer value = null;
+        for(Customer object : CUSTOMER_DATABASE)
+        {
+            if(object.getEmail() == email && object.getPassword() == password)
+            {
+                value = object;
+                break;
             }
-
         }
-        return null;
+        return value;
     }
-
 }

@@ -1,11 +1,5 @@
-
-/**
- * Write a description of class Location here.
- *
- * @author Erna Wulandari
- * @version 28-03-2019
- */
 package jstore;
+
 public class Location
 {
     // instance variables - replace the example below with your own
@@ -14,54 +8,72 @@ public class Location
     private String city;
 
     /**
-     * Constructor for objects of class Location
+     * Konstruktor untuk objek dari kelas Supplier
      */
-    public Location(String province, String city,
-    String description)
+    public Location(String city, String province, String description)
     {
-        
-        this.province = province;
+        // initialise instance variables
         this.city = city;
+        this.province = province;
         this.description = description;
     }
 
     /**
-     * @return province digunakan untuk mengembalikan nilai province
+     * Method getter untuk mengambil data
+     *
+     * @return    province
      */
     public String getProvince()
     {
-        return province;
+        // put your code here
+        return this.province;
     }
     
     /**
-     * @return city digunakan untuk mengembalikan nilai city
+     * Method getter untuk mengambil data
+     *
+     * @return    city
      */
     public String getCity()
     {
-        return city;
+        return this.city;
     }
     
     /**
-     * @return description digunakan untuk mengembalikan nilai description
+     * Method getter untuk mengambil data
+     *
+     * @return    description
      */
     public String getDescription()
     {
-        return description;
+        return this.description;
     }
     
     /**
-     * @param method digunakan untuk menentukan nilai province
+     * Method setter untuk menentukan data
+     *
+     * @param province
      */
     public void setProvince(String province)
     {
         this.province = province;
     }
     
+    /**
+     * Method setter untuk menentukan data
+     *
+     * @param city 
+     */
     public void setCity(String city)
     {
         this.city = city;
     }
     
+    /**
+     * Method setter untuk menentukan data
+     *
+     * @param description 
+     */
     public void setDescription(String description)
     {
         this.description = description;
@@ -69,10 +81,6 @@ public class Location
     
     public String toString()
     {
-        System.out.println("LOCATION");
-        System.out.println("PROVINSI" + province);
-        System.out.println("KOTA" + city);
-        System.out.println("Deskripsi" + description);
-        return "";
+        return "Province: " +province+ "\nCity: " +city+ "\nDescription: " +description;
     }
 }

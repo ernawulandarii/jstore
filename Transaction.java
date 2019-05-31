@@ -1,5 +1,4 @@
 package jstore;
-import java.util.*;
 /**
  * Write a description of class Transaction here.
  *
@@ -7,135 +6,91 @@ import java.util.*;
  * @version (a version number or a date)
  */
 import java.util.ArrayList;
-import java.util.*;
 
-public class Transaction {
-    private static ArrayList<Integer> listItem = new ArrayList<Integer>();
-
-    /**
-     * Constructor for objects of class Transaction
-     */
-    public Transaction() {
-
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * <p>
-     * //     * @param  y  a sample parameter for a method
-     *
-     * @return the sum of x and y
-     */
-    public static void orderNewItem(ArrayList<Integer> item) throws InvoiceAlreadyExistsException {
-        Invoice order = new Buy_Paid(listItem);
-        DatabaseInvoice.addInvoice(order);
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * <p>
-     * //     * @param  y  a sample parameter for a method
-     *
-     * @return the sum of x and y
-     */
-    public static void orderSecondItem(ArrayList<Integer> item) throws InvoiceAlreadyExistsException {
-        Invoice order = new Buy_Paid(listItem);
-        DatabaseInvoice.addInvoice(order);
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
-     * <p>
-     * //     * @param  y  a sample parameter for a method
-     *
-     * @return the sum of x and y
-     */
-    public static void orderRefurbishedItem(ArrayList<Integer> item) throws InvoiceAlreadyExistsException {
-        Invoice order = new Buy_Paid(listItem);
-        DatabaseInvoice.addInvoice(order);
-    }
-
+public class Transaction
+{
     /**
      * An example of a method - replace this comment with your own
      *
-     * @param
-     * @return the sum of x and y
-     */
-    public static void sellItemPaid(ArrayList<Integer> item, Customer customer) throws InvoiceAlreadyExistsException {
-        Invoice sellPaid = new Sell_Paid(listItem, customer);
-        DatabaseInvoice.addInvoice(sellPaid);
-    }
-
-    /**
-     * An example of a method - replace this comment with your own
      *
-     * @param
-     * @return the sum of x and y
      */
-    public static void sellItemUnpaid(ArrayList<Integer> item, Customer customer) throws InvoiceAlreadyExistsException {
-        Invoice sellUnpaid = new Sell_Unpaid(listItem, customer);
-        DatabaseInvoice.addInvoice(sellUnpaid);
+    public static void orderNewItem(ArrayList<Integer> item_list)
+    {
+        //ArrayList<Integer> temp = new ArrayList<>();
+        //temp.add(item.getId());
+        //Invoice inv = new Buy_Paid(temp);
+        //DatabaseInvoice.addInvoice(inv);
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param
-     * @return the sum of x and y
-     */
-    public static void sellItemInstallment(ArrayList<Integer> item, Customer customer,
-                                           int installmentPeriod) throws InvoiceAlreadyExistsException {
-        Invoice sellInstall = new Sell_Installment(listItem, installmentPeriod, customer);
-        DatabaseInvoice.addInvoice(sellInstall);
+    
+    public static void orderSecondItem(ArrayList<Integer> item_list)
+    {
+//        ArrayList<Integer> temp = new ArrayList<>();
+//        //temp.add(item.getId());
+//        Invoice inv = new Buy_Paid(temp);
+//        DatabaseInvoice.addInvoice(inv);
     }
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param
-     * @return the sum of x and y
-     */
+    
+    public static void orderRefurbishedItem(ArrayList<Integer> item_list)
+    {
+//        ArrayList<Integer> temp = new ArrayList<>();
+//        //temp.add(item.getId());
+//        Invoice inv = new Buy_Paid(temp);
+//        DatabaseInvoice.addInvoice(inv);
+    }
+    
+    public static void sellItemPaid(ArrayList<Integer> item_list, Customer customer)
+    {
+//        ArrayList<Integer> temp = new ArrayList<>();
+//        //temp.add(item.getId());
+//        Invoice inv = new Sell_Paid(temp, customer);
+//        DatabaseInvoice.addInvoice(inv);
+    }
+    
+    public static void sellItemUnpaid(ArrayList<Integer> item_list, Customer customer)
+    {
+//        ArrayList<Integer> temp = new ArrayList<>();
+//        //temp.add(item.getId());
+//        Invoice inv = new Sell_Unpaid(temp, customer);
+//        DatabaseInvoice.addInvoice(inv);
+    }
+    
+    public static void sellItemInstallment(ArrayList<Integer> item_list, Customer customer, int installmentPeriod)
+    {
+//        ArrayList<Integer> temp = new ArrayList<>();
+//        //temp.add(item.getId());
+//        Invoice inv = new Sell_Installment(temp,12,customer);
+//        DatabaseInvoice.addInvoice(inv);
+    }
+    
     public static boolean finishTransaction(Invoice invoice)
     {
-        if(invoice == DatabaseInvoice.getInvoice
-                (invoice.getId()))
-        {
-            return true;
-        }
-        if(invoice.getInvoiceStatus() == InvoiceStatus.Unpaid
-                || invoice.getInvoiceStatus() == InvoiceStatus.Installment)
-        {
-            invoice.setIsActive(false);
-            invoice.toString();
-            System.out.println("isActive : " + invoice.getIsActive());
-            return true;
+        if(invoice.getInvoiceStatus()==InvoiceStatus.Unpaid|| invoice.getInvoiceStatus()==InvoiceStatus.Installment){
+            ArrayList<Invoice> inv = DatabaseInvoice.getInvoiceDatabase();
+            for (int i = 0; i < inv.size(); i++){
+                if(inv.get(i).getId() == invoice.getId()){
+                    invoice.setIsActive(false);
+                    inv.set(i,invoice);
+                    System.out.println(invoice.toString());
+                    return true;
+                }
+            }
+            return false;
         }
         return false;
     }
-
-
-    /**
-     * An example of a method - replace this comment with your own
-     *
-     * @param
-     * @return    the sum of x and y
-     */
-    public static boolean cancelTransaction(Invoice invoice) throws InvoiceNotFoundException
+    
+    public static boolean cancelTransaction(Invoice invoice)
     {
-        invoice = DatabaseInvoice.getInvoice(invoice.getId());
-        if(invoice == null)
-        {
+        if(invoice.getInvoiceStatus()==InvoiceStatus.Unpaid|| invoice.getInvoiceStatus()==InvoiceStatus.Installment) {
+            ArrayList<Invoice> invDb = DatabaseInvoice.getInvoiceDatabase();
+            for (Invoice inv : invDb) {
+                if (inv.getId() == invoice.getId()) {
+                    invDb.remove(inv);
+                    return true;
+                }
+            }
             return false;
         }
-        if(invoice.getInvoiceStatus() == InvoiceStatus.Unpaid
-                || invoice.getInvoiceStatus() == InvoiceStatus.Installment)
-        {
-            invoice.setIsActive(false);
-            System.out.println("\nCancel Transaction");
-            System.out.println("isActive : " + invoice.getIsActive());
-            return true;
-        }
-        DatabaseInvoice.removeInvoice(invoice.getId());
-        return true;
+        return false;
     }
 }

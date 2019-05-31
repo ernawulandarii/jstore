@@ -1,48 +1,47 @@
-
-/**
- * Kelas ini berfungsi untuk membuat invoice dari tiap transaksi.
- *
- * @author Erna Wulandari
- * @version 28-Feb-2019
- */
 package jstore;
-import java.util.*;
+
+import java.util.Calendar;
 import java.util.ArrayList;
 
 public abstract class Invoice
 {
-    private static int id;
-    private ArrayList<Integer> item = new ArrayList<Integer>();
+    // instance variables - replace the example below with your own
+    private int id;
+    protected ArrayList<Integer> item;
     private Calendar date;
-    private int totalPrice;
+    protected int totalPrice;
     private boolean isActive;
-    private Customer customer;
-    private static InvoiceStatus status;
+    private Customer customer; 
     
     /**
-     * Constructor for objects of class Invoice
+     * Konstruktor untuk objek dari kelas Invoice
      */
     public Invoice(ArrayList<Integer> item)
     {
-        this.item = item;
-        id=DatabaseInvoice.getLastInvoiceID()+1;
-        this.date = new GregorianCalendar();
+        // initialise instance variables
+        this.item=item;
+        int size=item.size();
+        this.id=DatabaseInvoice.getLastInvoiceId()+1;
+        this.setDate(Calendar.getInstance());
+        this.date=getDate();
+        //setTotalPrice(item.getPrice()*totalItem);
     }
 
     /**
-     * Method untuk mengembalikan id invoice
+     * Method getter untuk mengambil data
      *
-     * @return    id invoice
+     * @return    id
      */
-    public static int getId()
+    public int getId()
     {
+        // put your code here
         return id;
     }
     
     /**
-     * Method untuk mengembalikan item yang dibeli
+     * Method getter untuk mengambil data
      *
-     * @return    objek item
+     * @return    item
      */
     public ArrayList<Integer> getItem()
     {
@@ -50,9 +49,9 @@ public abstract class Invoice
     }
     
     /**
-     * Method untuk mengembalikan tanggal invoice
+     * Method getter untuk mengambil data
      *
-     * @return    tanggal invoice
+     * @return    date
      */
     public Calendar getDate()
     {
@@ -60,23 +59,22 @@ public abstract class Invoice
     }
     
     /**
-     * Method untuk mengembalikan total harga item yang dibeli
+     * Method getter untuk mengambil data
      *
-     * @return    total harga
+     * @return    totalPrice
      */
     public int getTotalPrice()
     {
         return totalPrice;
     }
     
-    /**
-     * 
-     *
-     * @return    
-     */
-    public static boolean getIsActive()
+    public abstract InvoiceStatus getInvoiceStatus();
+    
+    public abstract InvoiceType getInvoiceType();
+    
+    public boolean getIsActive()
     {
-        return true;
+        return isActive;
     }
     
     public Customer getCustomer()
@@ -85,18 +83,9 @@ public abstract class Invoice
     }
     
     /**
-     * 
+     * Method setter untuk menentukan data
      *
-     * @return    
-     */
-    public abstract InvoiceStatus getInvoiceStatus();
-        
-    public abstract InvoiceType getInvoiceType();
-    
-    /**
-     * Method untuk mengubah id invoice
-     *
-     * @param  id  id dari suatu invoice
+     * @param id 
      */
     public void setId(int id)
     {
@@ -104,9 +93,9 @@ public abstract class Invoice
     }
     
     /**
-     * Method untuk mengubah item pada invoice
+     * Method setter untuk menentukan data
      *
-     * @param  item  objek item dari suatu invoice
+     * @param item 
      */
     public void setItem(ArrayList<Integer> item)
     {
@@ -114,9 +103,9 @@ public abstract class Invoice
     }
     
     /**
-     * Method untuk mengubah tanggal invoice
+     * Method setter untuk menentukan data
      *
-     * @param  date  tanggal dari suatu invoice
+     * @param date 
      */
     public void setDate(Calendar date)
     {
@@ -124,44 +113,24 @@ public abstract class Invoice
     }
     
     /**
-     * Method untuk mengubah total harga pada invoice
+     * Method setter untuk menentukan data
      *
-     * @param  totalPrice  total harga dari suatu invoice
+     * @param totalPrice 
      */
     public void setTotalPrice(int totalPrice)
     {
-        ArrayList<Integer> listItemID = DatabaseInvoice.getInvoice(id).getItem();
-        for(int priceID : listItemID)
-        {
-            this.totalPrice = totalPrice + DatabaseItem.getItemFromID(priceID).getPrice();
-        }
+        this.totalPrice = totalPrice;
     }
     
-    /**
-     * 
-     *
-     * @param  
-     */
-    //public abstract void setInvoiceStatus(InvoiceStatus status);
+//    public void setInvoiceStatus(InvoiceStatus status)
+//    {
+//        this.status = status;
+//    }
     
-    public void setIsActive(boolean isActive)
+    public void setIsActive(boolean active)
     {
-        this.isActive=isActive;
+        isActive = active;
     }
     
-    public void setCustomer(Customer customer)
-    {
-        this.customer = customer;
-    } 
-    
-    /**
-     * Method untuk menampilkan total harga pada invoice
-     *
-     */
-    public String toString()
-    {
-        System.out.println("");
-        return "";
-    }
-    
+    public abstract String toString();
 }

@@ -1,11 +1,5 @@
-
-/**
- * Write a description of class Location here.
- *
- * @author Erna Wulandari
- * @version 28-03-2019
- */
 package jstore;
+
 public class Item
 {
     // instance variables - replace the example below with your own
@@ -15,73 +9,112 @@ public class Item
     private ItemCategory category;
     private ItemStatus status;
     private Supplier supplier;
-    
 
     /**
-     * Constructor for objects of class Item
+     * Konstruktor untuk objek dari kelas Item
      */
-    public Item(String name, ItemStatus status,
-    int price, Supplier supplier, ItemCategory category)
+    public Item(String name, ItemStatus status, int price, Supplier supplier, ItemCategory category)
     {
+        // initialise instance variables
         this.id=DatabaseItem.getLastItemID()+1;
-        this.name = name;
-        this.status = status;
-        this.price = price;
-        this.supplier = supplier;
-        this.category = category;
+        this.name=name;
+        this.status=status;
+        this.price=price;
+        this.supplier=supplier;
+        this.category=category;
     }
 
     /**
-     * An example of a method - replace this comment with your own
+     * Method getter untuk mengambil data
      *
-     * @param
-     * @return    the sum of x and y
+     * @return    id
      */
     public int getId()
     {
+        // put your code here
         return id;
     }
     
+    /**
+     * Method getter untuk mengambil data
+     *
+     * @return    name
+     */
     public String getName()
     {
-        return name;     
+        return this.name;
     }
 
+    /**
+     * Method getter untuk mengambil data
+     *
+     * @return    price
+     */
     public int getPrice()
     {
-        return price;
+        return this.price;
     }
     
+    /**
+     * Method getter untuk mengambil data
+     *
+     * @return    category
+     */
     public ItemCategory getCategory()
     {
-       return category;
+        return this.category;
+    }
+    
+    /**
+     * Method getter untuk mengambil data
+     *
+     * @return    supplier
+     */
+    public Supplier getSupplier()
+    {
+        return this.supplier;
     }
     
     public ItemStatus getStatus()
     {
-        return status;
+        return this.status;
     }
     
-    public Supplier getSupplier()
-    {
-        return supplier;
-    }
-    
+    /**
+     * Method setter untuk menentukan data
+     *
+     * @param id 
+     */
     public void setId(int id)
     {
         this.id = id;
     }
     
+    /**
+     * Method setter untuk menentukan data
+     *
+     * @param name 
+     */
     public void setName(String name)
     {
         this.name = name;
     }
     
+    /**
+     * Method setter untuk menentukan data
+     *
+     * @param price 
+     */
     public void setPrice(int price)
     {
         this.price = price;
     }
     
+    /**
+     * Method setter untuk menentukan data
+     *
+     * @param category 
+     */
     public void setCategory(ItemCategory category)
     {
         this.category = category;
@@ -99,20 +132,6 @@ public class Item
     
     public String toString()
     {
-        System.out.println("ITEM");
-        System.out.println("ID" + id);
-        System.out.println("Name" + name);
-        System.out.println("Price:" + price);
-        System.out.println("kategory"+ category);
-        System.out.println("Status"+ status);
-        System.out.println("Supplier" + supplier.getName());
-        return "";
+        return "ID: " +id+ "\nName: " +name+ "\nPrice: " +price+ "\nCategory: " +category+ "\nStatus: " +status+ "\nSupplier: " +supplier;
     }
-    
 }
-    
-    
-
-    
-    
-

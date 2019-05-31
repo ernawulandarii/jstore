@@ -13,28 +13,28 @@ public class CustomerController {
         return "Hello " + name;
     }
 
-    @RequestMapping("/newcustomer")
+    @RequestMapping(value="/newcustomer", method= RequestMethod.POST)
     public Customer newCust(@RequestParam(value="name") String name,
                             @RequestParam(value="email") String email,
                             @RequestParam(value="username") String username,
                             @RequestParam(value="password") String password,
-                            @RequestParam(value="year", defaultValue = "1999") int year
+                            @RequestParam(value="birthdate", defaultValue = "1999") int year
     )
     {
         Customer customer = new Customer(name, email, username, password, year, 10, 10);
         try {
-            DatabaseCustomer.addCustomer(customer);
+            DatabaseCustomerPostgre.insertCustomer(customer);
         } catch(Exception ex) {
             ex.getMessage();
             return null;
-        };
+        }
 
         return customer;
     }
 
     @RequestMapping("/getcustomer/{id}")
     public Customer getCust(@PathVariable int id) {
-        Customer customer = DatabaseCustomer.getCustomer(id);
+        Customer customer = DatabaseCustomerPostgre.getCustomer(id);
         return customer;
     }
 
@@ -42,14 +42,11 @@ public class CustomerController {
     public Customer loginCust(@RequestParam(value = "email") String email,
                               @RequestParam(value = "password") String password ){
 
-        Customer customer;
-        try {
-            customer = DatabaseCustomer.getCustomerLogin(email, password);
-        } catch (Exception ex) {
-            ex.getMessage();
-            return null;
+        for(Customer cust:DatabaseCustomerPostgre.getCustomerDatabase()){
+            if(cust.getEmail().equals(email)&&cust.getPassword().equals(password)){
+                return cust;
+            }
         }
-        return customer;
+        return null;
     }
 }
-

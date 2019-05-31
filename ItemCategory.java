@@ -1,25 +1,22 @@
-
+package jstore;
 /**
  * Enumeration class ItemCategory - write a description of the enum class here
  *
  * @author (your name here)
  * @version (version number or date here)
  */
-package jstore;
 public enum ItemCategory
 {
-    Electronics("Electronics"), Furniture("Furniture"), 
-    Stationery("Stationery");
+    Electronics("Electronics"), Furniture("Furniture"), Stationery("Stationery");
     
-    private String description;
+    private String strItemCategory;
     
-    private ItemCategory(String description)
+    private ItemCategory(String strItemCategory)
     {
-        this.description = description;
+        this.strItemCategory=strItemCategory;
     }
     
-    public String toString()
-    {
-        return description;
+    public String toString(){
+        return strItemCategory;
     }
 }

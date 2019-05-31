@@ -1,135 +1,95 @@
-
+package jstore;
 /**
  * Write a description of class Sell_Unpaid here.
  *
  * @author (your name)
  * @version (a version number or a date)
  */
-package jstore;
-import java.io.IOException;
-import java.util.Calendar;
-import java.util.ArrayList;
 import java.util.*;
-import java.text.*;
+import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 
 public class Sell_Unpaid extends Invoice
 {
-    private static final InvoiceType INVOICE_TYPE = InvoiceType.Sell;
-    private static final InvoiceStatus INVOICE_STATUS = InvoiceStatus.Unpaid;
+    // instance variables - replace the example below with your own
+    private static final InvoiceType INVOICE_TYPE=InvoiceType.Sell;
+    private static final InvoiceStatus INVOICE_STATUS=InvoiceStatus.Unpaid;
     private Calendar dueDate;
     private Customer customer;
-    private boolean isActive;
-    private SimpleDateFormat date = new SimpleDateFormat ("dd MMM yyy");
+//    private boolean isActive;
     
     /**
      * Constructor for objects of class Sell_Unpaid
      */
     public Sell_Unpaid(ArrayList<Integer> item, Customer customer)
     {
+        // initialise instance variables
         super(item);
         this.customer=customer;
-        this.isActive=true;
-        this.dueDate=new GregorianCalendar();
-        dueDate.add((GregorianCalendar.DATE), 1);
+        this.dueDate = Calendar.getInstance();
+        dueDate.add(Calendar.DATE,1);
+        super.setIsActive(true);
+        int total = 0;
+        for(int id : item){
+            Item temp = DatabaseItem.getItemFromID(id);
+            int priceTemp = temp.getPrice();
+            total += priceTemp;
+        }
+        super.totalPrice = total;
     }
 
     /**
-     * An 
-     *
-     * @param
-     * @return    the 
+     * An example of a method - replace this comment with your own
+     * @return    the sum of x and y
      */
-    @Override
-    public InvoiceStatus getInvoiceStatus()
+   public InvoiceStatus getInvoiceStatus()
     {
+        // put your code here
         return INVOICE_STATUS;
     }
     
-    /**
-     * An 
-     *
-     * @param
-     * @return    th
-     */
-    @Override
     public InvoiceType getInvoiceType()
     {
         return INVOICE_TYPE;
     }
     
-    /**
-     * An 
-     *
-     * @param
-     * @return    th
-     */
     public Customer getCustomer()
     {
         return customer;
     }
     
-    /**
-     * An 
-     *
-     * @param
-     * @return    th
-     */
     public Calendar getDueDate()
     {
         return dueDate;
     }
     
-    /**
-     * An 
-     *
-     * @param
-     * @return    th
-     */
     public void setCustomer(Customer customer)
     {
-        this.customer = customer;
+        this.customer=customer;
     }
     
-    /**
-     * An 
-     *
-     * @param
-     * @return    th
-     */
     public void setDueDate(Calendar dueDate)
     {
-        this.dueDate = dueDate;
+        this.dueDate=dueDate;
     }
     
-    /**
-     * Me
-     *
-     */    
-    @Override
     public String toString()
     {
-        System.out.println("ID = " + super.getId());
-        ArrayList<Integer> listItemID = DatabaseInvoice.getInvoice(super.getId()).getItem();
-        for(int itemID : listItemID)
-        { if (DatabaseItem.getItemFromID(itemID) != null){
-                System.out.println("Item = " +
-                        DatabaseItem.getItemFromID(itemID).getName());
-                System.out.println("Price = " +
-                        DatabaseItem.getItemFromID(itemID).getPrice());
-                System.out.println("Supplier ID = " +
-                        DatabaseItem.getItemFromID(itemID).getSupplier().getId());
-                System.out.println("Supplier name = " +
-                        DatabaseItem.getItemFromID(itemID).getSupplier().getName());
-          }
+        StringBuilder total = new StringBuilder();
+        total.append("===============INVOICE===============\n");
+        for(int i : item){
+            Item temp = DatabaseItem.getItemFromID(i);
+            String stringTemp = null;
+            if (temp != null) {
+                stringTemp = temp.toString();
+                total.append(stringTemp);
+            }
+            total.append("\n");
         }
-        System.out.println("Buy date = " + date.format(super.getDate().getTime()));
-        System.out.println("Price total = " + super.getTotalPrice());
-        System.out.println("Customer ID = " + customer.getId());
-        System.out.println("Customer name = " + customer.getName());
-        System.out.println("Status = " + INVOICE_STATUS);
-        System.out.println("Due date = " + date.format(dueDate));
-        System.out.println(
-        "If payment is not received by dueDate, transaction will be cancelled.");
-        return "";
+//        total.append("\nCustomer: ").append(customer.getName());
+//        int price = this.getTotalPrice();
+//        total.append("\nTotal price = ").append(price);
+//        total.append("\n"+this.isActive());
+        return total.toString();
     }
 }

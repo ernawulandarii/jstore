@@ -5,12 +5,11 @@ public class CustomerNotFoundException extends Exception {
     public CustomerNotFoundException(int customer_input)
     {
         super("Customer ID: ");
-        this.customer_error = customer_input;
+        customer_error = customer_input;
     }
 
     public String getExMessage()
     {
-        System.out.println("\n====Customer Not Found Exception====");
-        return super.getMessage() + customer_error + " not found";
+        return super.getMessage() + customer_error + " not found.";
     }
 }
